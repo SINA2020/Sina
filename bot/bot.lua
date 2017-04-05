@@ -861,7 +861,7 @@ end
           end
         end
         ---------------------------------------------------
-      if text == 'پنل مدیریت' then
+      if text == 'پنل' then
           function inline(arg,data)
           tdcli_function({
         ID = "SendInlineQueryResultMessage",
