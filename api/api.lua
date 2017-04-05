@@ -1051,10 +1051,10 @@ local function getsettings(value)
        if value == "charge" then
        local ex = redis:ttl("charged:"..chat)
        if ex == -1 then
-        return "نامحدود!"
+        return "پی وی ربات!"
        else
         local d = math.floor(ex / day ) + 1
-        return "نامحدود!"
+        return "پی وی ربات!"
        end
         elseif value == 'muteall' then
 				local h = redis:ttl(SUDO..'muteall'..chat)
@@ -1208,10 +1208,10 @@ local function getsettings(value)
         if value == "charge" then
        local ex = redis:ttl("charged:"..chat)
        if ex == -1 then
-        return "نامحدود!"
+        return "پی وی ربات"
        else
         local d = math.floor(ex / day ) + 1
-        return "نامحدود!"
+        return "پی وی ربات"
        end
         elseif value == 'muteall' then
         local h = redis:ttl(SUDO..'muteall'..chat)
