@@ -944,7 +944,7 @@ end
           db:del(SUDO..'muteall'..msg.chat_id_)
         bot.sendMessage(msg.chat_id_, msg.id_, 1, '<code>فیلتر تمامی گفتگو ها غیرفعال گردید!</code>', 1, 'html')
           end
-        if text == 'وضعیت قف گروه' then
+        if text == 'وضعیت قفل گروه' then
           local status = db:ttl(SUDO..'muteall'..msg.chat_id_)
           if tonumber(status) < 0 then
             t = 'زمانی برای آزاد شدن چت تعییین نشده است !'
@@ -1113,7 +1113,7 @@ end
         bot.resolve_username(username,invite_username)
         end
       if text and text:match('^پاک کردن (%d+)$') then
-        local limit = tonumber(text:match('^del (%d+)$'))
+        local limit = tonumber(text:match('^پاک کردن (%d+)$'))
         if limit > 100 then
          bot.sendMessage(msg.chat_id_, msg.id_, 1, 'تعداد پیام وارد شده از حد مجاز (100 پیام) بیشتر است !', 1, 'html')
           else
