@@ -657,9 +657,9 @@ end
         bot.sendMessage(msg.chat_id_, msg.id_, 1, '<code>>کاربر</code> [<b>'..user..'</b>] <code>از لیست مالکین گروه حذف گردید و توانایی مدیریت گروه از کاربر گفته شد.</code>', 1, 'html')
       end
         end
-      if text == 'عزل مالکین' or text == 'حذف لیست مالکین' then
+      if text == 'عزل مالکان' or text == 'حذف لیست مالکان' then
         db:del(SUDO..'owners:'..msg.chat_id_)
-          bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>به لیست ادمین های ربات افزوده گردید.</code>', 1, 'html')
+          bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>> لیست مالکان گروه باموفقیت حذف گردید.</code>', 1, 'html')
         end
       --------------------------master--------------------------
 	   if text == 'تنظیم ادمین' then
@@ -739,7 +739,7 @@ end
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>ارسال پیام خوش آمدگویی غیرفعال گردید.</code>', 1, 'html')
           end
         if text and text:match('^تنظیم خوشامد (.*)') then
-          local welcome = text:match('^setwelcome (.*)')
+          local welcome = text:match('^تنظیم خوشامد (.*)')
           db:set(SUDO..'welcome:'..msg.chat_id_,welcome)
           local t = '<code>>پیغام خوش آمدگویی با موفقیت ذخیره و تغییر یافت.</code>\n<code>>متن پیام خوش آمدگویی تنظیم شده:</code>:\n{<code>'..welcome..'</code>}'
           bot.sendMessage(msg.chat_id_, msg.id_, 1,t, 1, 'html')
@@ -748,7 +748,7 @@ end
           db:del(SUDO..'welcome:'..msg.chat_id_,welcome)
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>پیغام خوش آمدگویی بازنشانی گردید و به حالت پیشفرض تنظیم شد.</code>', 1, 'html')
           end
-        if text == 'مالکین' or text == 'لیست مالکین' then
+        if text == 'مالکان' or text == 'لیست مالکان' then
           local list = db:smembers(SUDO..'owners:'..msg.chat_id_)
           local t = '<code>>لیست مالکین گروه:</code> \n\n'
           for k,v in pairs(list) do
@@ -812,8 +812,8 @@ end
           end
         bot.resolve_username(username,demreply)
         end
-        if text and text:match('^عزل مدیر (%d+)') then
-          local user = text:match('عزل مدیر (%d+)')
+        if text and text:match('^تنظیم مدیر (%d+)') then
+          local user = text:match('تنظیم مدیر (%d+)')
           db:sadd(SUDO..'mods:'..msg.chat_id_,user)
         bot.sendMessage(msg.chat_id_, msg.id_, 1, '<code>>کاربر</code> [<b>'..user..'</b>] <code>به مقام مدیریت گروه ارتقاء یافت.</code>', 1, 'html')
       end
@@ -902,12 +902,12 @@ end
         ..'><code>Mute-Chat:</code> |'..getsettings('muteall')..'|\n'
         bot.sendMessage(msg.chat_id_, msg.id_, 1, text, 1, '')
        end]]
-      if text and text:match('^floodmax (%d+)$') then
-          db:set(SUDO..'floodmax'..msg.chat_id_,text:match('floodmax (.*)'))
+      if text and text:match('^تنظیم فلود (%d+)$') then
+          db:set(SUDO..'floodmax'..msg.chat_id_,text:match('تنظیم فلود (.*)'))
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>حداکثر پیام تشخیص ارسال پیام مکرر تنظیم شد به:</code> [<b>'..text:match('floodmax (.*)')..'</b>] <code>تغییر یافت.</code>', 1, 'html')
         end
-        if text and text:match('^floodtime (%d+)$') then
-          db:set(SUDO..'floodtime'..msg.chat_id_,text:match('floodtime (.*)'))
+        if text and text:match('^زمان فلود (%d+)$') then
+          db:set(SUDO..'floodtime'..msg.chat_id_,text:match('زمان فلود (.*)'))
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>حداکثر زمان تشخیص ارسال پیام مکرر تنظیم شد به:</code> [<b>'..text:match('floodtime (.*)')..'</b>] <code>ثانیه.</code>', 1, 'html')
         end
         if text == 'لینک' then
@@ -940,11 +940,11 @@ end
           db:setex(hash, tonumber(time), true)
           bot.sendMessage(msg.chat_id_, msg.id_, 1, '<code>>فیلتر تمامی گفتگو ها برای مدت زمان</code> [<b>'..time..'</b>] <code>ثانیه فعال گردید.</code>', 1, 'html')
           end
-        if text == 'unmutechat' then
+        if text == 'بازکردن گروه' then
           db:del(SUDO..'muteall'..msg.chat_id_)
         bot.sendMessage(msg.chat_id_, msg.id_, 1, '<code>فیلتر تمامی گفتگو ها غیرفعال گردید!</code>', 1, 'html')
           end
-        if text == 'mutechat status' then
+        if text == 'وضعیت قف گروه' then
           local status = db:ttl(SUDO..'muteall'..msg.chat_id_)
           if tonumber(status) < 0 then
             t = 'زمانی برای آزاد شدن چت تعییین نشده است !'
@@ -1070,7 +1070,7 @@ end
           end
         bot.resolve_username(username,muteusername)
         end
-      if text == 'رفع سایلنت' and tonumber(msg.reply_to_message_id_) > 0 then
+      if text == 'آزاد سایلنت' and tonumber(msg.reply_to_message_id_) > 0 then
         function unmutereply(extra, result, success)
         unmute(msg,msg.chat_id_,result.sender_user_id_)
           end
@@ -1133,13 +1133,13 @@ end
     end
         end
 	
-    if text == 'مدیران' or text == 'مدیرین' then
+    if text == 'مدیران' or text == 'لیست مدیران' then
           local list = db:smembers(SUDO..'mods:'..msg.chat_id_)
           local t = '<code>>لیست مدیران گروه:</code> \n\n'
           for k,v in pairs(list) do
           t = t..k.." - <code>"..v.."</code>\n" 
           end
-          t = t..'\n<code>>برای مشاهده کاربر از دستور زیر استفاده کنید </code> \n<code>/whois [آیدی کاربر]</code>\n مثال :\n <code>/whois 159887854</code>'
+          t = t..'\n<code>>برای مشاهده کاربر از دستور زیر استفاده کنید </code> \n<code>/چه کسی [آیدی کاربر]</code>\n مثال :\n <code>/whois 159887854</code>'
           if #list == 0 then
           t = '<code>>مدیریت برای این گروه ثبت نشده است.</code>'
           end
@@ -1154,8 +1154,8 @@ end
          db:sadd(SUDO..'filters:'..msg.chat_id_,w)
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'" '..w..' "  <code>>به لیست کلمات فیلتر شده اضاف گردید!</code>', 1, 'html')
        end
-      if text and text:match('^رفع فیلتر +(.*)') then
-        local w = text:match('^رفع فیلتر +(.*)')
+      if text and text:match('^حذف فیلتر (.*)') then
+        local w = text:match('^حذف فیلتر (.*)')
          db:srem(SUDO..'filters:'..msg.chat_id_,w)
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'" '..w..' "  <code>>از لیست کلمات فیلتر شده پاک شد!</code>', 1, 'html')
        end
@@ -1202,12 +1202,12 @@ end
           end
         bot.resolve_username(username,id_by_username)
         end
-          if text == 'id' then
+          if text == 'آیدی' then
             if tonumber(msg.reply_to_message_id_) == 0 then
         bot.sendMessage(msg.chat_id_, msg.id_, 1, '<code>شناسه-گروه</code>: {<b>'..msg.chat_id_..'</b>}', 1, 'html')
           end
             end
-			if text == 'pin' then
+			if text == 'سنجاق' then
         local id = msg.id_
         local msgs = {[0] = id}
        pin(msg.chat_id_,msg.reply_to_message_id_,0)
@@ -1237,7 +1237,7 @@ end
       end
    -- member
    if text == 'انلاینی' then
-          local a = {"<code>ربات فعال و آماده کار است.</code>","<code>ربات فعال است</code>","<b>pong!</b>"}
+          local a = {"<code>ربات فعال و آماده کار است.</code>","<code>ربات فعال است</code>","<b>آنلاینم!</b>"}
           bot.sendMessage(msg.chat_id_, msg.id_, 1,''..a[math.random(#a)]..'', 1, 'html')
       end
 	  db:incr("allmsg")
@@ -1260,7 +1260,7 @@ end
         end
      end
     end
-	  if text == 'شماره' then
+	  if text == 'شماره تصادفی' then
          local number = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","43","45","46","47","48","49","50"}  
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<b>Your Random Number:</b>\n [<code>'..number[math.random(#number)]..'</code>]', 1, 'html')
       end
@@ -1282,42 +1282,42 @@ help = [[متن راهنمای مالک ربات ثبت نشده است.]]
     help = [[
 	<code>>راهنمای مالکین گروه(اصلی-فرعی)</code>
 
-*<b>[/#!]settings</b> --<code>دریافت تنظیمات گروه</code>
+*<b>[/#!]پنل مدیریت</b> --<code>دریافت تنظیمات و پنل مدیریت گروه</code>
 *<b>[/#!]setrules</b> --<code>تنظیم قوانین گروه</code>
-*<b>[/#!]modset</b> @username|reply|user-id --<code>تنظیم مالک فرعی جدید برای گروه با یوزرنیم|ریپلی|شناسه -فرد</code>
-*<b>[/#!]moddem</b> @username|reply|user-id --<code>حذف مالک فرعی از گروه با یوزرنیم|ریپلی|شناسه -فرد</code>
-*<b>[/#!]ownerlist</b> --<code>دریافت لیست مدیران اصلی</code>
-*<b>[/#!]managers</b> --<code>دریافت لیست مدیران فرعی گروه</code>
-*<b>[/#!]setlink</b> <code>link</code> <code>{لینک-گروه} --تنظیم لینک گروه</code>
-*<b>[/#!]link</b> <code>دریافت لینک گروه</code>
-*<b>[/#!]kick</b> @username|reply|user-id <code>اخراج کاربر با ریپلی|یوزرنیم|شناسه</code>
+*<b>[/#!]تنظیم مدیر</b> @username|reply|user-id --<code>تنظیم مالک فرعی جدید برای گروه با یوزرنیم|ریپلی|شناسه -فرد</code>
+*<b>[/#!]عزل مدیر</b> @username|reply|user-id --<code>حذف مالک فرعی از گروه با یوزرنیم|ریپلی|شناسه -فرد</code>
+*<b>[/#!]لیست مالکان</b> --<code>دریافت لیست مدیران اصلی</code>
+*<b>[/#!]لیست مدیران</b> --<code>دریافت لیست مدیران فرعی گروه</code>
+*<b>[/#!]تنظیم لینک</b> <code>link</code> <code>{لینک-گروه} --تنظیم لینک گروه</code>
+*<b>[/#!]لینک</b> <code>دریافت لینک گروه</code>
+*<b>[/#!]مسدود</b> @username|reply|user-id <code>اخراج کاربر با ریپلی|یوزرنیم|شناسه</code>
 <b>-------------------------------</b>
 <code>>راهنمای بخش حذف ها</code>
-*<b>[/#!]delete managers</b> <code>{حذف تمامی مدیران فرعی تنظیم شده برای گروه}</code>
-*<b>[/#!]delete welcome</b> <code>{حذف پیغام خوش آمدگویی تنظیم شده برای گروه}</code>
-*<b>[/#!]delete bots</b> <code>{حذف تمامی ربات های موجود در ابرگروه}</code>
-*<b>[/#!]delete silentlist</b> <code>{حذف لیست سکوت کاربران}</code>
-*<b>[/#!]delete filterlist</b> <code>{حذف لیست کلمات فیلتر شده در گروه}</code>
+*<b>[/#!]حذف لیست مدیران</b> <code>{حذف تمامی مدیران فرعی تنظیم شده برای گروه}</code>
+*<b>[/#!]حذف خوشامد</b> <code>{حذف پیغام خوش آمدگویی تنظیم شده برای گروه}</code>
+*<b>[/#!]حذف رباتها</b> <code>{حذف تمامی ربات های موجود در ابرگروه}</code>
+*<b>[/#!]حذف لیست سایلنت</b> <code>{حذف لیست سکوت کاربران}</code>
+*<b>[/#!]حذف لیست فیلتر</b> <code>{حذف لیست کلمات فیلتر شده در گروه}</code>
 <b>-------------------------------</b>
 <code>>راهنمای بخش خوش آمدگویی</code>
-*<b>[/#!]welcome enable</b> --<code>(فعال کردن پیغام خوش آمدگویی در گروه)</code>
-*<b>[/#!]welcome disable</b> --<code>(غیرفعال کردن پیغام خوش آمدگویی در گروه)</code>
-*<b>[/#!]setwelcome text</b> --<code>(تنظیم پیغام خوش آمدگویی جدید در گروه)</code>
+*<b>[/#!]خوشامد روشن</b> --<code>(فعال کردن پیغام خوش آمدگویی در گروه)</code>
+*<b>[/#!]خوشامد خاموش</b> --<code>(غیرفعال کردن پیغام خوش آمدگویی در گروه)</code>
+*<b>[/#!]تنظیم خوشامد متن</b> --<code>(تنظیم پیغام خوش آمدگویی جدید در گروه)</code>
 <b>-------------------------------</b>
 <code>>راهنمای بخش فیلترگروه</code>
-*<b>[/#!]mutechat</b> --<code>فعال کردن فیلتر تمامی گفتگو ها</code>
-*<b>[/#!]unmutechat</b> --<code>غیرفعال کردن فیلتر تمامی گفتگو ها</code>
-*<b>[/#!]mutechat number(h|m|s)</b> --<code>فیلتر تمامی گفتگو ها بر حسب زمان[ساعت|دقیقه|ثانیه]</code>
+*<b>[/#!]قفل گروه</b> --<code>فعال کردن فیلتر تمامی گفتگو ها</code>
+*<b>[/#!]بازکردن گروه</b> --<code>غیرفعال کردن فیلتر تمامی گفتگو ها</code>
+*<b>[/#!]قفل گروه number(h|m|s)</b> --<code>فیلتر تمامی گفتگو ها بر حسب زمان[ساعت|دقیقه|ثانیه]</code>
 <b>-------------------------------</b>
 <code>>راهنمای دستورات حالت سکوت کاربران</code>
-*<b>[/#!]silentuser</b> @username|reply|user-id <code>--افزودن کاربر به لیست سکوت با یوزرنیم|ریپلی|شناسه -فرد</code>
-*<b>[/#!]unsilentuser</b> @username|reply|user-id <code>--افزودن کاربر به لیست سکوت با یوزرنیم|ریپلی|شناسه -فرد</code>
-*<b>[/#!]silentlist</b> <code>--دریافت لیست کاربران حالت سکوت</code>
+*<b>[/#!]سایلنت</b> @username|reply|user-id <code>--افزودن کاربر به لیست سکوت با یوزرنیم|ریپلی|شناسه -فرد</code>
+*<b>[/#!]آزاد سایلنت</b> @username|reply|user-id <code>--افزودن کاربر به لیست سکوت با یوزرنیم|ریپلی|شناسه -فرد</code>
+*<b>[/#!]لیست سایلنت</b> <code>--دریافت لیست کاربران حالت سکوت</code>
 <b>-------------------------------</b>
 <code>>راهنمای بخش فیلتر-کلمات</code>
-*<b>[/#!]filter word</b> <code>--افزودن عبارت جدید به لیست کلمات فیلتر شده</code>
-*<b>[/#!]unfilter word</b> <code>--حذف عبارت جدید از لیست کلمات فیلتر شده</code>
-*<b>[/#!]filterlist</b> <code>--دریافت لیست کلمات فیلتر شده</code>
+*<b>[/#!]فیلتر کلمه</b> <code>--افزودن عبارت جدید به لیست کلمات فیلتر شده</code>
+*<b>[/#!]حذف فیلتر کلمه</b> <code>--حذف عبارت جدید از لیست کلمات فیلتر شده</code>
+*<b>[/#!]لیست فیلتر</b> <code>--دریافت لیست کلمات فیلتر شده</code>
 <b>-------------------------------</b>
 <code>>راهنمای دستورات تنظیمات ابر-گروه[فیلترها]</code>
 *<b>[/#!]lock|unlock link</b> --<code>(فعال سازی/غیرفعال سازی ارسال تبلیغات)</code>
@@ -1339,8 +1339,8 @@ help = [[متن راهنمای مالک ربات ثبت نشده است.]]
 *<b>[/#!]lock|unlock number(h|m|s)</b> --<code>(مجاز/غیرمجاز کردن ارسال پیغام مکرر)</code>
 <b>-------------------------------</b>
 <code>>راهنمای بخش تنظیم پیغام مکرر</code>
-*<b>[/#!]floodmax number</b> --<code>تنظیم حساسیت نسبت به ارسال پیام مکرر</code>
-*<b>[/#!]floodtime</b> --<code>تنظیم حساسیت نسبت به ارسال پیام مکرر برحسب زمان</code>
+*<b>[/#!]تنظیم فلود عدد</b> --<code>تنظیم حساسیت نسبت به ارسال پیام مکرر</code>
+*<b>[/#!]زمان فلود</b> --<code>تنظیم حساسیت نسبت به ارسال پیام مکرر برحسب زمان</code>
 ]]
    elseif is_mod(msg) then
     help = [[از متن راهنمای مالکین گروه استفاده کنید.]]
