@@ -328,7 +328,7 @@ local hash = SUDO..'settings:'..chat..':'..value
                    {text = '📋منو اصلی🌍', callback_data = 'firstmenu:'..chat},{text = '⬅️صفحه قبل🔙', callback_data = 'supportbot:'..chat}
 				}
 							}
-              edit(q.inline_message_id,'`به بخش ارتباط با بخش فنی خوش آمدید.`\n`در صورت وجود مشکل در ربات به ما پیغام ارسال کنید:`\n[🙋‍♂ارسال پیغام🙋](https://telegram.me/Nicesup_bot)',keyboard)
+              edit(q.inline_message_id,'`🔧به بخش ارتباط با بخش فنی خوش آمدید.🔧`\n`در صورت وجود مشکل در ربات به ما پیغام ارسال کنید:`\n[🙋‍♂ارسال پیغام🙋](https://telegram.me/Nicesup_bot)',keyboard)
             end
 							------------------------------------------------------------------------
 							if q.data:match('reportproblem') then
@@ -339,7 +339,7 @@ local hash = SUDO..'settings:'..chat..':'..value
                    {text = '📋منو اصلی🌍', callback_data = 'firstmenu:'..chat},{text = '⬅️صفحه قبل🔙', callback_data = 'supportbot:'..chat}
 				}
 							}
-              edit(q.inline_message_id,'`به بخش گزارش مشکل خوش آمدید.`\n`در صورت وجود مشکل در کارکرد سرویس شما به ما اطلاع دهید:`\n[⚡️گزارش مشکل⚡️](https://telegram.me/Nicesup_bot)',keyboard)
+              edit(q.inline_message_id,'`🙋به بخش گزارش مشکل خوش آمدید🙋.`\n`در صورت وجود مشکل در کارکرد سرویس شما به ما اطلاع دهید:`\n[⚡️گزارش مشکل⚡️](https://telegram.me/Nicesup_bot)',keyboard)
             end
 							------------------------------------------------------------------------
 							if q.data:match('fahedsale') then
@@ -347,7 +347,7 @@ local hash = SUDO..'settings:'..chat..':'..value
 		local keyboard = {}
 							keyboard.inline_keyboard = {
 								{
-								{text = 'تمدید سرویس انتخابی', callback_data = 'tamdidservice:'..chat},{text = 'خرید طرح جدید', callback_data = 'salegroup:'..chat}
+								{text = '⏰تمدید سرویس انتخابی⏰', callback_data = 'tamdidservice:'..chat},{text = '💸خرید طرح جدید💸', callback_data = 'salegroup:'..chat}
 
                 },{
 				{text = '📊گزارش مالی📈', callback_data = 'reportmony:'..chat}
@@ -367,7 +367,7 @@ local hash = SUDO..'settings:'..chat..':'..value
                    {text = '📋منو اصلی🌍', callback_data = 'firstmenu:'..chat},{text = '⬅️صفحه قبل🔙', callback_data = 'fahedsale:'..chat}
 				}
 							}
-              edit(q.inline_message_id,'`💖 @Nice20Admin@ برای تمدید ربات به آیدی مفابل پی وی بدید💖`',keyboard)
+              edit(q.inline_message_id,'`💖 @Nice20Admin@ برای تمدید ربات به آیدی مقابل پی وی بدید💖`',keyboard)
             end
 							------------------------------------------------------------------------
 							if q.data:match('reportmony') then
@@ -1138,10 +1138,10 @@ local function getsettings(value)
        if value == "charge" then
        local ex = redis:ttl("charged:"..chat)
        if ex == -1 then
-        return "نامحدود!"
+        return "پی وی ربات"
        else
         local d = math.floor(ex / day ) + 1
-        return "نامحدود!"
+        return "پی وی ربات"
        end
         elseif value == 'spam' then
         local hash = redis:get(SUDO..'settings:flood'..chat)
@@ -1189,7 +1189,7 @@ local function getsettings(value)
                 },{
                   {text=getsettings('contact'),callback_data=chat..':lock contact'},{text = '☎️مخاطب📞', callback_data = chat..'_contact'}
                 },{
-                   {text = '📋منو اصلی🌍', callback_data = 'firstmenu:'..chat},{text = '▶️ صفحه بعدی', callback_data = 'next_page:'..chat}
+                   {text = '📋منو اصلی🌍', callback_data = 'firstmenu:'..chat},{text = '⏩صفحه بعد➡️', callback_data = 'next_page:'..chat}
                 }
 							}
               edit(q.inline_message_id,'تنظیمات-ابرگروه(بخش1):',keyboard)
@@ -1281,9 +1281,9 @@ local function getsettings(value)
                 },{
 									{text='⬇️',callback_data=chat..':lock MSGMAXdown'},{text='⬆️',callback_data=chat..':lock MSGMAXup'}
 									},{
-                  {text='تاریخ انقضاء گروه: '..getsettings('charge'),callback_data=chat..'_charge'}
+                  {text='❌تاریخ انقضای گروه🕔: '..getsettings('charge'),callback_data=chat..'_charge'}
                 },{
-                  {text = '⬅️صفحه قبل🔙', callback_data = 'left_page:'..chat},{text = '▶️ صفحه بعدی', callback_data = 'next_pagee:'..chat}
+                  {text = '⬅️صفحه قبل🔙', callback_data = 'left_page:'..chat},{text = '⏩صفحه بعد➡️', callback_data = 'next_pagee:'..chat}
                 }
 							}
               edit(q.inline_message_id,'تنظیمات-ابرگروه:',keyboard)
