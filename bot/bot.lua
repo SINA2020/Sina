@@ -1,12 +1,12 @@
-bot = dofile('/home/bot9/inline/data/utils.lua')
-json = dofile('/home/bot9/inline/data/JSON.lua')
+bot = dofile('/home/nic1/inline/data/utils.lua')
+json = dofile('/home/nic1/inline/data/JSON.lua')
 URL = require "socket.url"
 serpent = require("serpent")
 http = require "socket.http"
 https = require "ssl.https"
 redis = require('redis')
 db = redis.connect('127.0.0.1', 6379)
-BASE = '/home/bot9/inline/bot/'
+BASE = '/home/nic1/inline/bot/'
 SUDO = 333677042 --sudo id
 sudo_users = {333677042,166253826}
 BOTS = 00000000 --bot id
@@ -875,7 +875,7 @@ end
             end
           tdcli_function({
       ID = "GetInlineQueryResults",
-      bot_user_id_ = 336303573,
+      bot_user_id_ = 359230568,
       chat_id_ = msg.chat_id_,
       user_location_ = {
         ID = "Location",
