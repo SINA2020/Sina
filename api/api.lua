@@ -1073,13 +1073,13 @@ local function getsettings(value)
           return 'غیرفعال'
           end
         elseif value == 'spam' then
-        local hash = redis:get(SUDO..'settings:flood'..chat)
+        local hash = redis:hget("flooding:settings:"..chat, "flood")
         if hash then
-            if redis:get(SUDO..'settings:flood'..chat) == 'kick' then
+            if redis:hget("flooding:settings:"..chat, "flood") == 'kick' then
          return 'اخراج(کاربر)'
-              elseif redis:get(SUDO..'settings:flood'..chat) == 'ban' then
+              elseif redis:hget("flooding:settings:"..chat, "flood") == 'ban' then
               return 'مسدود سازی(کاربر)'
-              elseif redis:get(SUDO..'settings:flood'..chat) == 'mute' then
+              elseif redis:hget("flooding:settings:"..chat, "flood") == 'mute' then
               return 'سکوت(کاربر)'
               end
           else
@@ -1230,13 +1230,13 @@ local function getsettings(value)
           return 'غیرفعال'
           end
         elseif value == 'spam' then
-        local hash = redis:get(SUDO..'settings:flood'..chat)
+        local hash = redis:hget("flooding:settings:"..chat, "flood")
         if hash then
-            if redis:get(SUDO..'settings:flood'..chat) == 'kick' then
+            if redis:hget("flooding:settings:"..chat, "flood") == 'kick' then
          return 'اخراج(کاربر)'
-              elseif redis:get(SUDO..'settings:flood'..chat) == 'ban' then
+              elseif redis:hget("flooding:settings:"..chat, "flood") == 'ban' then
               return 'مسدود-سازی(کاربر)'
-              elseif redis:get(SUDO..'settings:flood'..chat) == 'mute' then
+              elseif redis:hget("flooding:settings:"..chat, "flood") == 'mute' then
               return 'سکوت-کاربر'
               end
           else
