@@ -886,7 +886,7 @@ end
       offset_ = 0
     }, inline, nil)
        end
-	   --[[if text == 'muteslist' then
+	   --[[ifflooding:settings:"..ch ,"floodmax"  text == 'muteslist' then
         local text = '><b>Group-Filterlist:</b>\n<b>----------------</b>\n'
         ..'><code>Filter-Photo:</code> |'..getsettings('photo')..'|\n'
         ..'><code>Filter-Video:</code> |'..getsettings('video')..'|\n'
@@ -902,8 +902,9 @@ end
         ..'><code>Mute-Chat:</code> |'..getsettings('muteall')..'|\n'
         bot.sendMessage(msg.chat_id_, msg.id_, 1, text, 1, '')
        end]]
-      if text and text:match('^تنظیم فلود (%d+)$') then
-          db:set(SUDO..'floodmax'..msg.chat_id_,text:match('تنظیم فلود (.*)'))
+      if text and text:match('^تنظیم فلود (%d+)$') th
+				local ch = msg.chat_id_
+          db:hset("flooding:settings:"..ch ,"floodmax" ,text:match('تنظیم فلود (.*)'))
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>حداکثر پیام تشخیص ارسال پیام مکرر تنظیم شد به:</code> [<b>'..text:match('floodmax (.*)')..'</b>] <code>تغییر یافت.</code>', 1, 'html')
         end
         if text and text:match('^زمان فلود (%d+)$') then
