@@ -908,7 +908,8 @@ end
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>حداکثر پیام تشخیص ارسال پیام مکرر تنظیم شد به:</code> [<b>'..text:match('floodmax (.*)')..'</b>] <code>تغییر یافت.</code>', 1, 'html')
         end
         if text and text:match('^زمان فلود (%d+)$') then
-          db:set(SUDO..'floodtime'..msg.chat_id_,text:match('زمان فلود (.*)'))
+				local ch = msg.chat_id_ 
+          db:hset("flooding:settings:"..ch ,"floodtime" ,text:match('زمان فلود (.*)'))
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>حداکثر زمان تشخیص ارسال پیام مکرر تنظیم شد به:</code> [<b>'..text:match('floodtime (.*)')..'</b>] <code>ثانیه.</code>', 1, 'html')
         end
         if text == 'لینک' then
