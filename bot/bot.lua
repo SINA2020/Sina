@@ -902,7 +902,7 @@ end
         ..'><code>Mute-Chat:</code> |'..getsettings('muteall')..'|\n'
         bot.sendMessage(msg.chat_id_, msg.id_, 1, text, 1, '')
        end]]
-      if text and text:match('^تنظیم فلود (%d+)$') th
+      if text and text:match('^تنظیم فلود (%d+)$') then
 				local ch = msg.chat_id_
           db:hset("flooding:settings:"..ch ,"floodmax" ,text:match('تنظیم فلود (.*)'))
           bot.sendMessage(msg.chat_id_, msg.id_, 1,'<code>>حداکثر پیام تشخیص ارسال پیام مکرر تنظیم شد به:</code> [<b>'..text:match('floodmax (.*)')..'</b>] <code>تغییر یافت.</code>', 1, 'html')
